@@ -1,4 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import AnswersList from "./AnswersList";
+import AnswersItem from "./AnswersItem";
 
 function Survey()  {
   const [open, setOpen] = useState(false); //Ignore this state
@@ -14,9 +16,14 @@ function Survey()  {
 
   const [answerData, setAnswerData] = useState([]);
 
+  useEffect(() => {
+    console.log(answerData)
+  }, [answerData])
+
+
   const handleSubmit = (event) => {
     event.preventDefault(); 
-    console.log(formData)
+    // console.log(formData)
     const newAnswer = {
       username: formData.username,
       email: formData.email,
@@ -26,9 +33,8 @@ function Survey()  {
     }
     // setAnswerData((prev) => [...prev, newAnswer])
     setAnswerData([...answerData, newAnswer])
-    console.log(answerData)
+    
   }
-
   
     const handleChange = (event) => {
       const { name, value, type, checked } = event.target;
@@ -60,7 +66,7 @@ function Survey()  {
       <main className="survey">
       <section className={`survey__list ${open ? "open" : ""}`}>
         <h2>Answers list</h2>
-        {/* answers should go here */}
+        <AnswersList answersList={answerData}></AnswersList>
       </section>
 
       <section className="survey__form">
